@@ -1,0 +1,44 @@
+{
+  "name": "vite-fullstack",
+  "version": "1.0.0",
+  "description": "Vite Fullstack Runtime com Atomic Behavior Routes e MCP integrado.",
+  "type": "module",
+  "scripts": {
+    "ensure-network": "docker network inspect neurohive >/dev/null 2>&1 || docker network create neurohive",
+    "ensure-mongo": "node scripts/check-mongo.js",
+
+    "dev": "npm run ensure-network && npm run ensure-mongo && vite",
+    "start": "npm run ensure-network && npm run ensure-mongo && node dist/server.js",
+
+    "prettier": "prettier --write .",
+    "lint": "eslint . --fix",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+
+    "prebuild": "npm run prettier && npm run lint && npm run test",
+    "build": "npm run prebuild && vite build",
+
+    "compose:up": "npm run ensure-network && docker compose up -d",
+    "compose:down": "docker compose down",
+    "prepare": "husky install",
+
+    "cm": "node scripts/commit.js"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^9.0.0",
+    "husky": "^9.0.0",
+    "prettier": "^3.2.0",
+    "typescript": "^5.5.0",
+    "vite": "^5.2.0",
+    "vitest": "^1.6.0",
+    "@vitejs/plugin-react": "^4.3.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "zod": "^3.23.8"
+  }
+} 
